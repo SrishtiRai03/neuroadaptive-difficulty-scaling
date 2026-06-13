@@ -156,8 +156,6 @@
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius * p.life, 0, Math.PI * 2);
       ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 8;
       ctx.fill();
       ctx.restore();
 

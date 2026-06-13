@@ -61,7 +61,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--bg-tertiary) var(--bg-primary);
   font-size: 16px;

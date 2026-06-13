@@ -80,10 +80,7 @@
       ctx.strokeStyle = this.color;
       ctx.lineWidth = lineWidth;
       ctx.lineCap = 'round';
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = 15;
       ctx.stroke();
-      ctx.shadowBlur = 0;
 
       // Center text
       ctx.fillStyle = '#e2e8f0';
@@ -325,6 +322,8 @@
   /* ================================================================
      HYSTERESIS BARS
      ================================================================ */
+  let _hystBars = [];  // cache of existing bar elements
+
   function renderHysteresisBars(history) {
     const container = document.getElementById('hysteresis-bars');
     if (!container) return;
@@ -334,7 +333,18 @@
     // Pad to 30 if needed
     while (data.length < 30) data.unshift(0.35);
 
-    let html = '';
+    // Create bars once, then update style only
+    if (_hystBars.length !== data.length) {
+      container.innerHTML = '';
+      _hystBars = [];
+      for (let i = 0; i < data.length; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'hysteresis-bar filled';
+        container.appendChild(bar);
+        _hystBars.push(bar);
+      }
+    }
+
     for (let i = 0; i < data.length; i++) {
       const val = data[i];
       const height = Math.max(4, val * 80);
@@ -342,9 +352,9 @@
                   : val < 0.50 ? COLORS.zoneFlow
                   : val < 0.75 ? COLORS.zoneAnxious
                   : COLORS.zoneFrustrated;
-      html += `<div class="hysteresis-bar filled" style="height:${height}px; background:${color};"></div>`;
+      _hystBars[i].style.height = height + 'px';
+      _hystBars[i].style.background = color;
     }
-    container.innerHTML = html;
   }
 
   /* ================================================================
