@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Neuroadaptive Difficulty Scaling (NDS) — An interactive demonstration of bio-behavioural signal-driven dynamic difficulty adjustment for games.">
+  <title>NDS — Neuroadaptive Difficulty Scaling System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════════════ -->
+  <nav class="main-nav" id="main-nav">
+    <div class="nav-logo">NDS://</div>
+    <div class="nav-links" id="nav-links">
+      <a href="#hero" class="nav-link active" data-section="hero">Home</a>
+      <a href="#science" class="nav-link" data-section="science">Science</a>
+      <a href="#dashboard" class="nav-link" data-section="dashboard">Dashboard</a>
+      <a href="#game-section" class="nav-link" data-section="game-section">Play</a>
+      <a href="#architecture" class="nav-link" data-section="architecture">Architecture</a>
+    </div>
+    <div class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 1: HERO LANDING
+       ═══════════════════════════════════════════════════ -->
+  <section id="hero">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Neuromorphic Gaming AI
+      </div>
+      <h1 class="hero-title">
+        Adaptive <span class="gradient-text">Enemy AI</span><br>System
+      </h1>
+      <p class="hero-subtitle">
+        Dynamic difficulty via bio-behavioural signals. Real-time reaction time analysis, movement pattern recognition, and stress detection — fused into seamless gameplay adaptation.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Signal Pillars</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Difficulty Zones</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">60<span style="font-size:1rem">Hz</span></div>
+          <div class="stat-label">Real-Time Adapt</div>
+        </div>
+      </div>
+      <a href="#science" class="cta-btn">
+        Explore the Science
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2: THE SCIENCE
+       ═══════════════════════════════════════════════════ -->
+  <section id="science">
+    <h2 class="section-title animate-in">The Science</h2>
+    <p class="section-subtitle animate-in">Csikszentmihalyi's Flow Theory meets Yerkes-Dodson arousal optimization — three bio-behavioural signal pillars fused into a single adaptive difficulty engine.</p>
+
+    <!-- Flow Channel Interactive -->
+    <div class="flow-channel animate-in">
+      <div class="flow-visualization" id="flow-viz">
+        <div class="flow-zones">
+          <div class="flow-zone" data-zone="bored">
+            <div class="zone-emoji">😴</div>
+            <div class="zone-name">Bored</div>
+            <div class="zone-desc">Challenge too low</div>
+            <div class="zone-response">↑ Speed & Aggression</div>
+          </div>
+          <div class="flow-zone active-zone" data-zone="flow">
+            <div class="zone-emoji">🎯</div>
+            <div class="zone-name">Flow</div>
+            <div class="zone-desc">Optimal challenge</div>
+            <div class="zone-response">✓ Balanced</div>
+          </div>
+          <div class="flow-zone" data-zone="anxious">
+            <div class="zone-emoji">😰</div>
+            <div class="zone-name">Anxious</div>
+            <div class="zone-desc">Challenge rising</div>
+            <div class="zone-response">↓ Spawn Rate</div>
+          </div>
+          <div class="flow-zone" data-zone="frustrated">
+            <div class="zone-emoji">😤</div>
+            <div class="zone-name">Frustrated</div>
+            <div class="zone-desc">Challenge too high</div>
+            <div class="zone-response">⚠ Rescue Mode</div>
+          </div>
+        </div>
+        <div class="flow-marker" id="flow-marker" style="left: 37.5%"></div>
+      </div>
+      <div class="flow-slider-container">
+        <label for="flow-slider">Drag to simulate player difficulty ↕</label>
+        <input type="range" id="flow-slider" min="0" max="100" value="37">
+      </div>
+    </div>
+
+    <!-- 3 Signal Pillars -->
+    <div class="pillars-grid">
+      <div class="pillar-card animate-in">
+        <div class="pillar-icon">⏱</div>
+        <div class="pillar-title">Reaction Time Analysis</div>
+        <p class="pillar-desc">Rolling window of click latencies, filtered via median for outlier robustness. Maps to a 0–1 skill score.</p>
+        <div class="pillar-metrics">
+          <div class="pillar-metric">
+            <span class="metric-label">Baseline</span>
+            <span class="metric-value">250ms</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Window</span>
+            <span class="metric-value">10 samples</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Weight</span>
+            <span class="metric-value">0.40</span>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-card animate-in">
+        <div class="pillar-icon">🖱</div>
+        <div class="pillar-title">Movement Pattern Analysis</div>
+        <p class="pillar-desc">Path efficiency ratio and velocity variance measure cursor fluency. Smooth paths = high skill; jittery paths = struggle.</p>
+        <div class="pillar-metrics">
+          <div class="pillar-metric">
+            <span class="metric-label">Sample Rate</span>
+            <span class="metric-value">60 Hz</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Metrics</span>
+            <span class="metric-value">Efficiency + Var</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Weight</span>
+            <span class="metric-value">0.35</span>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-card animate-in">
+        <div class="pillar-icon">💓</div>
+        <div class="pillar-title">Stress Signal Detection</div>
+        <p class="pillar-desc">Click-mashing frequency and input burstiness as a stress proxy. Exponential decay keeps the signal responsive.</p>
+        <div class="pillar-metrics">
+          <div class="pillar-metric">
+            <span class="metric-label">Decay Rate</span>
+            <span class="metric-value">0.95</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Rescue Trigger</span>
+            <span class="metric-value">> 0.85 / 90s</span>
+          </div>
+          <div class="pillar-metric">
+            <span class="metric-label">Weight</span>
+            <span class="metric-value">0.25</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yerkes-Dodson Curve -->
+    <div class="yerkes-section animate-in">
+      <h3 class="section-title" style="font-size:1.5rem; margin-bottom: 0.5rem;">Yerkes-Dodson Curve</h3>
+      <p class="section-subtitle" style="margin-bottom: 1.5rem;">Performance peaks at moderate arousal — the NDS engine keeps players in this sweet spot.</p>
+      <div class="yerkes-container">
+        <canvas id="yerkes-chart" height="250"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3: LIVE DASHBOARD
+       ═══════════════════════════════════════════════════ -->
+  <section id="dashboard">
+    <h2 class="section-title animate-in">Live Dashboard</h2>
+    <p class="section-subtitle animate-in">Watch the NDS engine process signals in real time. Simulate different player types or tune the inputs manually.</p>
+
+    <div class="dashboard-grid">
+      <!-- Row 1: Three gauges -->
+      <div class="gauges-row animate-in">
+        <div class="gauge-card">
+          <div class="gauge-ring">
+            <canvas id="gauge-rt" width="140" height="140"></canvas>
+          </div>
+          <div class="gauge-label">RT Score</div>
+          <div class="gauge-value" id="gauge-rt-val">0.50</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gauge-ring">
+            <canvas id="gauge-movement" width="140" height="140"></canvas>
+          </div>
+          <div class="gauge-label">Movement Score</div>
+          <div class="gauge-value" id="gauge-movement-val">0.50</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gauge-ring">
+            <canvas id="gauge-stress" width="140" height="140"></canvas>
+          </div>
+          <div class="gauge-label">Stress Index</div>
+          <div class="gauge-value" id="gauge-stress-val">0.20</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Difficulty line chart + zone display -->
+      <div class="chart-card animate-in">
+        <div class="chart-title">
+          <span class="live-dot"></span>
+          Difficulty Score Over Time
+        </div>
+        <canvas id="difficulty-chart" height="200"></canvas>
+      </div>
+
+      <div class="zone-display animate-in">
+        <div class="chart-title">Current Zone</div>
+        <div class="zone-name zone-flow" id="zone-label">FLOW</div>
+        <div class="zone-bar-track">
+          <div class="zone-bar-fill" id="zone-bar" style="width: 37.5%; background: var(--zone-flow);"></div>
+        </div>
+        <div class="zone-bar-segments">
+          <span>BORED</span>
+          <span>FLOW</span>
+          <span>ANXIOUS</span>
+          <span>FRUSTRATED</span>
+        </div>
+
+        <!-- Rescue Mode Indicator -->
+        <div class="rescue-mode" id="rescue-indicator">
+          <span>⚠</span>
+          <span>RESCUE MODE ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- Row 3: Enemy params + controls -->
+      <div class="enemy-params animate-in">
+        <h3>⚔ Enemy Parameters</h3>
+        <div class="param-row">
+          <span class="param-label">Speed Mult</span>
+          <span class="param-value" id="param-speed">1.00×</span>
+        </div>
+        <div class="param-row">
+          <span class="param-label">Aggression</span>
+          <span class="param-value" id="param-aggression">0.50</span>
+        </div>
+        <div class="param-row">
+          <span class="param-label">HP Mult</span>
+          <span class="param-value" id="param-hp">1.00×</span>
+        </div>
+        <div class="param-row">
+          <span class="param-label">Damage Mult</span>
+          <span class="param-value" id="param-damage">1.00×</span>
+        </div>
+        <div class="param-row">
+          <span class="param-label">Archetype</span>
+          <span class="param-value" id="param-archetype">GRUNT</span>
+        </div>
+      </div>
+
+      <div class="controls-panel animate-in">
+        <h3>🎮 Simulation Controls</h3>
+        <div class="sim-buttons">
+          <button class="sim-btn" data-sim="bored" id="btn-sim-bored">😴 Bored</button>
+          <button class="sim-btn active" data-sim="flow" id="btn-sim-flow">🎯 Flow</button>
+          <button class="sim-btn" data-sim="stressed" id="btn-sim-stressed">😰 Stressed</button>
+          <button class="sim-btn" data-sim="fatigued" id="btn-sim-fatigued">😤 Fatigued</button>
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Reaction Time</span>
+            <span class="slider-val" id="slider-rt-val">250ms</span>
+          </div>
+          <input type="range" id="slider-rt" min="100" max="600" value="250">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Movement Quality</span>
+            <span class="slider-val" id="slider-move-val">0.70</span>
+          </div>
+          <input type="range" id="slider-movement" min="0" max="100" value="70">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <span>Stress Level</span>
+            <span class="slider-val" id="slider-stress-val">0.20</span>
+          </div>
+          <input type="range" id="slider-stress" min="0" max="100" value="20">
+        </div>
+      </div>
+
+      <!-- Hysteresis Visualization -->
+      <div class="hysteresis-card animate-in" style="grid-column: 1 / -1;">
+        <h3>Hysteresis Buffer — Zone Change Dampening</h3>
+        <div class="hysteresis-bars" id="hysteresis-bars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4: PLAYABLE DEMO
+       ═══════════════════════════════════════════════════ -->
+  <section id="game-section">
+    <h2 class="section-title animate-in">Playable Demo</h2>
+    <p class="section-subtitle animate-in">Click the targets as fast as you can. The NDS engine measures your real signals and adapts enemy behavior in real time.</p>
+
+    <div class="game-layout">
+      <div class="game-area animate-in">
+        <div class="game-canvas-wrapper" id="game-wrapper">
+          <canvas id="game-canvas" width="800" height="500"></canvas>
+          <div class="game-overlay" id="game-overlay">
+            <h3>NDS Reaction Demo</h3>
+            <p>Click START to begin a 60-second session</p>
+          </div>
+        </div>
+        <div class="game-controls">
+          <button class="game-btn primary-btn" id="game-start">▶ Start</button>
+          <button class="game-btn" id="game-reset" disabled>↺ Reset</button>
+        </div>
+      </div>
+
+      <div class="game-stats animate-in">
+        <h3>📊 Live Stats</h3>
+        <div class="stat-row">
+          <span class="stat-name">Score</span>
+          <span class="stat-val" id="game-score">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Avg RT</span>
+          <span class="stat-val" id="game-rt">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Hits / Misses</span>
+          <span class="stat-val" id="game-hits">0 / 0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Current Zone</span>
+          <span class="stat-val" id="game-zone">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Difficulty</span>
+          <span class="stat-val" id="game-difficulty">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Enemy Type</span>
+          <span class="stat-val" id="game-enemy-type">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Time Left</span>
+          <span class="stat-val" id="game-timer">60s</span>
+        </div>
+        <div class="game-mini-chart">
+          <canvas id="game-difficulty-chart" height="130"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SESSION REPORT MODAL
+       ═══════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="report-modal">
+    <div class="modal-content">
+      <h3>📝 Session Report</h3>
+      <div class="report-grid">
+        <div class="report-item">
+          <div class="report-val" id="report-score">0</div>
+          <div class="report-label">Final Score</div>
+        </div>
+        <div class="report-item">
+          <div class="report-val" id="report-rt">0ms</div>
+          <div class="report-label">Avg RT</div>
+        </div>
+        <div class="report-item">
+          <div class="report-val" id="report-accuracy">0%</div>
+          <div class="report-label">Accuracy</div>
+        </div>
+        <div class="report-item">
+          <div class="report-val" id="report-zone">—</div>
+          <div class="report-label">Dominant Zone</div>
+        </div>
+      </div>
+      <div class="report-tip" id="report-tip">
+        Great session! The NDS engine adapted difficulty based on your performance.
+      </div>
+      <button class="modal-close" id="report-close">Close Report</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 5: ARCHITECTURE & ETHICS
+       ═══════════════════════════════════════════════════ -->
+  <section id="architecture">
+    <h2 class="section-title animate-in">System Architecture</h2>
+    <p class="section-subtitle animate-in">Module dependency graph, tunable constants, core engine loop, ethical guidelines, and game concept prototypes.</p>
+
+    <!-- Module Flow Diagram -->
+    <div class="arch-flow animate-in">
+      <div class="module-group">
+        <span class="module-group-label">Input Signals</span>
+        <div class="module-node">RT Analyser<span class="node-rate">10-sample window</span></div>
+        <div class="module-node">Movement Analyser<span class="node-rate">60 Hz sampling</span></div>
+        <div class="module-node">Stress Detector<span class="node-rate">Click frequency</span></div>
+      </div>
+      <div class="module-arrow">→</div>
+      <div class="module-group">
+        <span class="module-group-label">Fusion</span>
+        <div class="module-node">Signal Fusion<span class="node-rate">Weighted: 0.4 / 0.35 / 0.25</span></div>
+      </div>
+      <div class="module-arrow">→</div>
+      <div class="module-group">
+        <span class="module-group-label">Engine</span>
+        <div class="module-node">Difficulty Engine<span class="node-rate">EMA α = 0.15</span></div>
+        <div class="module-node">Hysteresis Buffer<span class="node-rate">δ = 0.08</span></div>
+      </div>
+      <div class="module-arrow">→</div>
+      <div class="module-group">
+        <span class="module-group-label">Output</span>
+        <div class="module-node">Enemy AI Mapper<span class="node-rate">5 archetypes</span></div>
+        <div class="module-node">Spawn Manager<span class="node-rate">Dynamic rate</span></div>
+      </div>
+    </div>
+
+    <!-- Constants Table -->
+    <div class="constants-section animate-in">
+      <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Tunable Constants</h3>
+      <table class="constants-table">
+        <thead>
+          <tr>
+            <th>Constant</th>
+            <th>Value</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>RT_BASELINE</td><td>250ms</td><td>Typical human visual reaction time</td></tr>
+          <tr><td>RT_SLOW_THRESHOLD</td><td>400ms</td><td>Player is struggling or disengaged</td></tr>
+          <tr><td>RT_FAST_THRESHOLD</td><td>150ms</td><td>Player is highly skilled/alert</td></tr>
+          <tr><td>WEIGHT_RT</td><td>0.40</td><td>Reaction time contribution to difficulty</td></tr>
+          <tr><td>WEIGHT_MOVEMENT</td><td>0.35</td><td>Movement quality contribution</td></tr>
+          <tr><td>WEIGHT_STRESS</td><td>0.25</td><td>Stress signal contribution (negative)</td></tr>
+          <tr><td>DIFFICULTY_SMOOTHING</td><td>0.15</td><td>EMA smoothing factor (α)</td></tr>
+          <tr><td>HYSTERESIS_BUFFER</td><td>0.08</td><td>Minimum delta to change zone</td></tr>
+          <tr><td>RESCUE_THRESHOLD</td><td>0.85</td><td>Stress level to trigger rescue mode</td></tr>
+          <tr><td>RESCUE_DURATION</td><td>90s</td><td>Time at high stress before rescue activates</td></tr>
+          <tr><td>STRESS_DECAY</td><td>0.95</td><td>Exponential decay for stress signal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pseudocode -->
+    <div class="pseudocode-section animate-in">
+      <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Core Engine Loop</h3>
+      <div class="pseudocode-block">
+        <code><pre>
+<span class="keyword">function</span> <span class="function">engineTick</span>():
+    <span class="comment">// 1. Gather signals</span>
+    rtScore      ← <span class="function">RTAnalyser</span>.<span class="function">getScore</span>()           <span class="comment">// 0..1</span>
+    moveScore    ← <span class="function">MovementAnalyser</span>.<span class="function">getScore</span>()     <span class="comment">// 0..1</span>
+    stressIndex  ← <span class="function">StressDetector</span>.<span class="function">getStressIndex</span>() <span class="comment">// 0..1</span>
+
+    <span class="comment">// 2. Weighted fusion</span>
+    raw ← <span class="number">0.40</span> × rtScore + <span class="number">0.35</span> × moveScore − <span class="number">0.25</span> × stressIndex
+    raw ← <span class="function">clamp</span>(raw, <span class="number">0.1</span>, <span class="number">1.0</span>)
+
+    <span class="comment">// 3. EMA smoothing</span>
+    difficulty ← difficulty × (<span class="number">1</span> − <span class="number">0.15</span>) + raw × <span class="number">0.15</span>
+
+    <span class="comment">// 4. Hysteresis — only change zone if delta > 0.08</span>
+    <span class="keyword">if</span> |difficulty − lastZoneDifficulty| > <span class="number">0.08</span>:
+        zone ← <span class="function">mapToZone</span>(difficulty)
+        lastZoneDifficulty ← difficulty
+
+    <span class="comment">// 5. Rescue mode check</span>
+    <span class="keyword">if</span> stressIndex > <span class="number">0.85</span> <span class="keyword">for</span> > <span class="number">90</span>s:
+        <span class="function">activateRescueMode</span>()
+
+    <span class="comment">// 6. Map to enemy parameters</span>
+    enemyParams ← <span class="function">EnemyAI</span>.<span class="function">getParams</span>(difficulty, zone)
+    <span class="keyword">return</span> { difficulty, zone, enemyParams }</pre></code>
+      </div>
+    </div>
+
+    <!-- Ethics -->
+    <div class="ethics-grid animate-in">
+      <div class="ethics-card">
+        <div class="ethics-icon">🔍</div>
+        <div class="ethics-title">Transparency</div>
+        <p class="ethics-desc">Players can see their own signal scores and how difficulty is being adjusted. No hidden manipulation — the dashboard is the proof.</p>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">🎛</div>
+        <div class="ethics-title">Player Agency</div>
+        <p class="ethics-desc">Manual difficulty override always available. NDS adapts, but the player has final control — including the ability to disable adaptation entirely.</p>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">🔒</div>
+        <div class="ethics-title">Data Minimization</div>
+        <p class="ethics-desc">Only behavioural signals are processed — no biometric data leaves the device. All processing is local, real-time, and ephemeral.</p>
+      </div>
+      <div class="ethics-card">
+        <div class="ethics-icon">⚖</div>
+        <div class="ethics-title">Fairness</div>
+        <p class="ethics-desc">The NDS system ensures difficulty adapts to individual skill, not demographic assumptions. Every player gets a personalized challenge curve.</p>
+      </div>
+    </div>
+
+    <!-- Game Concepts -->
+    <h3 class="section-title animate-in" style="font-size: 1.5rem; margin: 3rem 0 1.5rem;">Game Concepts</h3>
+    <div class="concepts-grid animate-in">
+      <div class="concept-card">
+        <div class="concept-title">REFLEX</div>
+        <div class="concept-genre">Fast-Paced Action Shooter</div>
+        <p class="concept-desc">Arena-based shooter where enemy speed, accuracy, and spawn rates are governed by the NDS engine in real time.</p>
+        <div class="concept-features">
+          <div class="concept-feature">RT-driven enemy reaction speed</div>
+          <div class="concept-feature">Movement-based cover system difficulty</div>
+          <div class="concept-feature">Stress-adaptive health regeneration</div>
+        </div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">PULSE</div>
+        <div class="concept-genre">Rhythm-Horror Hybrid</div>
+        <p class="concept-desc">Horror game with a rhythm mechanic — the soundtrack adapts to your stress levels, creating a personalized fear curve.</p>
+        <div class="concept-features">
+          <div class="concept-feature">BPM synced to stress index</div>
+          <div class="concept-feature">Scare timing tuned to RT patterns</div>
+          <div class="concept-feature">Dynamic ambient soundscape</div>
+        </div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">GHOST PROTOCOL</div>
+        <div class="concept-genre">Tactical Stealth</div>
+        <p class="concept-desc">Stealth game where enemy patrol intelligence scales with player skill. Expert players face coordinated search patterns.</p>
+        <div class="concept-features">
+          <div class="concept-feature">AI patrol complexity ∝ movement skill</div>
+          <div class="concept-feature">Detection radius adapts to RT</div>
+          <div class="concept-feature">Rescue mode adds safe zones</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <p class="footer-quote">"The best difficulty system is one the player never notices — they just feel like the game was made for them."</p>
+    <p>NDS — Neuroadaptive Difficulty Scaling System &copy; 2026 | NeuronEx Hackathon</p>
+  </footer>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/simulation.js"></script>
+  <script src="js/enemies.js"></script>
+  <script src="js/visualizer.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
