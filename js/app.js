@@ -17,9 +17,15 @@
       this.particles = [];
       this.mouse = { x: null, y: null };
       this.animId = null;
+      this.isVisible = true;
       this.resize();
 
-      window.addEventListener('resize', () => this.resize());
+      // Throttled resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => this.resize(), 200);
+      });
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
         this.mouse.x = e.clientX - rect.left;
@@ -29,6 +35,12 @@
         this.mouse.x = null;
         this.mouse.y = null;
       });
+
+      // Pause when hero is offscreen
+      const heroObs = new IntersectionObserver((entries) => {
+        this.isVisible = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      heroObs.observe(this.canvas.parentElement);
     }
 
     resize() {
@@ -38,40 +50,47 @@
     }
 
     initParticles() {
-      const count = Math.min(80, Math.floor((this.canvas.width * this.canvas.height) / 12000));
+      const count = Math.min(40, Math.floor((this.canvas.width * this.canvas.height) / 25000));
       this.particles = [];
       for (let i = 0; i < count; i++) {
         this.particles.push({
           x: Math.random() * this.canvas.width,
           y: Math.random() * this.canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: 1.5 + Math.random() * 2,
-          opacity: 0.2 + Math.random() * 0.5,
-          color: Math.random() > 0.6 ? '#7c3aed' : '#00d4ff',
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: 1.5 + Math.random() * 1.5,
+          opacity: 0.25 + Math.random() * 0.4,
+          color: Math.random() > 0.5 ? '#c084fc' : '#818cf8',
         });
       }
     }
 
     draw() {
+      this.animId = requestAnimationFrame(() => this.draw());
+
+      // Skip rendering when offscreen
+      if (!this.isVisible) return;
+
       const ctx = this.ctx;
       const w = this.canvas.width;
       const h = this.canvas.height;
       ctx.clearRect(0, 0, w, h);
 
-      const connectionDist = 150;
+      const connectionDist = 120;
+      const connectionDistSq = connectionDist * connectionDist;
 
-      // Draw connections
+      // Draw connections (use squared distance to avoid sqrt)
       for (let i = 0; i < this.particles.length; i++) {
         for (let j = i + 1; j < this.particles.length; j++) {
           const dx = this.particles[i].x - this.particles[j].x;
           const dy = this.particles[i].y - this.particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < connectionDist) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < connectionDistSq) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.moveTo(this.particles[i].x, this.particles[i].y);
             ctx.lineTo(this.particles[j].x, this.particles[j].y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 * (1 - dist / connectionDist)})`;
+            ctx.strokeStyle = `rgba(129, 140, 248, ${0.06 * (1 - dist / connectionDist)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -81,29 +100,27 @@
         if (this.mouse.x !== null) {
           const dx = this.particles[i].x - this.mouse.x;
           const dy = this.particles[i].y - this.mouse.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 200) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 40000) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.moveTo(this.particles[i].x, this.particles[i].y);
             ctx.lineTo(this.mouse.x, this.mouse.y);
-            ctx.strokeStyle = `rgba(124, 58, 237, ${0.15 * (1 - dist / 200)})`;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(192, 132, 252, ${0.12 * (1 - dist / 200)})`;
+            ctx.lineWidth = 0.7;
             ctx.stroke();
           }
         }
       }
 
-      // Draw & update particles
+      // Draw & update particles (no shadow for performance)
       for (const p of this.particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.opacity;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
         ctx.fill();
         ctx.globalAlpha = 1;
-        ctx.shadowBlur = 0;
 
         p.x += p.vx;
         p.y += p.vy;
@@ -113,8 +130,6 @@
         if (p.y < 0) p.y = h;
         if (p.y > h) p.y = 0;
       }
-
-      this.animId = requestAnimationFrame(() => this.draw());
     }
 
     start() { this.draw(); }

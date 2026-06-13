@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Neuroadaptive Difficulty Scaling (NDS) — An interactive demonstration of bio-behavioural signal-driven dynamic difficulty adjustment for games.">
   <title>NDS — Neuroadaptive Difficulty Scaling System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
@@ -20,7 +23,7 @@
       <a href="#science" class="nav-link" data-section="science">Science</a>
       <a href="#dashboard" class="nav-link" data-section="dashboard">Dashboard</a>
       <a href="#game-section" class="nav-link" data-section="game-section">Play</a>
-      <a href="#architecture" class="nav-link" data-section="architecture">Architecture</a>
+
     </div>
     <div class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
@@ -399,159 +402,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 5: ARCHITECTURE & ETHICS
-       ═══════════════════════════════════════════════════ -->
-  <section id="architecture">
-    <h2 class="section-title animate-in">System Architecture</h2>
-    <p class="section-subtitle animate-in">Module dependency graph, tunable constants, core engine loop, ethical guidelines, and game concept prototypes.</p>
 
-    <!-- Module Flow Diagram -->
-    <div class="arch-flow animate-in">
-      <div class="module-group">
-        <span class="module-group-label">Input Signals</span>
-        <div class="module-node">RT Analyser<span class="node-rate">10-sample window</span></div>
-        <div class="module-node">Movement Analyser<span class="node-rate">60 Hz sampling</span></div>
-        <div class="module-node">Stress Detector<span class="node-rate">Click frequency</span></div>
-      </div>
-      <div class="module-arrow">→</div>
-      <div class="module-group">
-        <span class="module-group-label">Fusion</span>
-        <div class="module-node">Signal Fusion<span class="node-rate">Weighted: 0.4 / 0.35 / 0.25</span></div>
-      </div>
-      <div class="module-arrow">→</div>
-      <div class="module-group">
-        <span class="module-group-label">Engine</span>
-        <div class="module-node">Difficulty Engine<span class="node-rate">EMA α = 0.15</span></div>
-        <div class="module-node">Hysteresis Buffer<span class="node-rate">δ = 0.08</span></div>
-      </div>
-      <div class="module-arrow">→</div>
-      <div class="module-group">
-        <span class="module-group-label">Output</span>
-        <div class="module-node">Enemy AI Mapper<span class="node-rate">5 archetypes</span></div>
-        <div class="module-node">Spawn Manager<span class="node-rate">Dynamic rate</span></div>
-      </div>
-    </div>
-
-    <!-- Constants Table -->
-    <div class="constants-section animate-in">
-      <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Tunable Constants</h3>
-      <table class="constants-table">
-        <thead>
-          <tr>
-            <th>Constant</th>
-            <th>Value</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>RT_BASELINE</td><td>250ms</td><td>Typical human visual reaction time</td></tr>
-          <tr><td>RT_SLOW_THRESHOLD</td><td>400ms</td><td>Player is struggling or disengaged</td></tr>
-          <tr><td>RT_FAST_THRESHOLD</td><td>150ms</td><td>Player is highly skilled/alert</td></tr>
-          <tr><td>WEIGHT_RT</td><td>0.40</td><td>Reaction time contribution to difficulty</td></tr>
-          <tr><td>WEIGHT_MOVEMENT</td><td>0.35</td><td>Movement quality contribution</td></tr>
-          <tr><td>WEIGHT_STRESS</td><td>0.25</td><td>Stress signal contribution (negative)</td></tr>
-          <tr><td>DIFFICULTY_SMOOTHING</td><td>0.15</td><td>EMA smoothing factor (α)</td></tr>
-          <tr><td>HYSTERESIS_BUFFER</td><td>0.08</td><td>Minimum delta to change zone</td></tr>
-          <tr><td>RESCUE_THRESHOLD</td><td>0.85</td><td>Stress level to trigger rescue mode</td></tr>
-          <tr><td>RESCUE_DURATION</td><td>90s</td><td>Time at high stress before rescue activates</td></tr>
-          <tr><td>STRESS_DECAY</td><td>0.95</td><td>Exponential decay for stress signal</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pseudocode -->
-    <div class="pseudocode-section animate-in">
-      <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Core Engine Loop</h3>
-      <div class="pseudocode-block">
-        <code><pre>
-<span class="keyword">function</span> <span class="function">engineTick</span>():
-    <span class="comment">// 1. Gather signals</span>
-    rtScore      ← <span class="function">RTAnalyser</span>.<span class="function">getScore</span>()           <span class="comment">// 0..1</span>
-    moveScore    ← <span class="function">MovementAnalyser</span>.<span class="function">getScore</span>()     <span class="comment">// 0..1</span>
-    stressIndex  ← <span class="function">StressDetector</span>.<span class="function">getStressIndex</span>() <span class="comment">// 0..1</span>
-
-    <span class="comment">// 2. Weighted fusion</span>
-    raw ← <span class="number">0.40</span> × rtScore + <span class="number">0.35</span> × moveScore − <span class="number">0.25</span> × stressIndex
-    raw ← <span class="function">clamp</span>(raw, <span class="number">0.1</span>, <span class="number">1.0</span>)
-
-    <span class="comment">// 3. EMA smoothing</span>
-    difficulty ← difficulty × (<span class="number">1</span> − <span class="number">0.15</span>) + raw × <span class="number">0.15</span>
-
-    <span class="comment">// 4. Hysteresis — only change zone if delta > 0.08</span>
-    <span class="keyword">if</span> |difficulty − lastZoneDifficulty| > <span class="number">0.08</span>:
-        zone ← <span class="function">mapToZone</span>(difficulty)
-        lastZoneDifficulty ← difficulty
-
-    <span class="comment">// 5. Rescue mode check</span>
-    <span class="keyword">if</span> stressIndex > <span class="number">0.85</span> <span class="keyword">for</span> > <span class="number">90</span>s:
-        <span class="function">activateRescueMode</span>()
-
-    <span class="comment">// 6. Map to enemy parameters</span>
-    enemyParams ← <span class="function">EnemyAI</span>.<span class="function">getParams</span>(difficulty, zone)
-    <span class="keyword">return</span> { difficulty, zone, enemyParams }</pre></code>
-      </div>
-    </div>
-
-    <!-- Ethics -->
-    <div class="ethics-grid animate-in">
-      <div class="ethics-card">
-        <div class="ethics-icon">🔍</div>
-        <div class="ethics-title">Transparency</div>
-        <p class="ethics-desc">Players can see their own signal scores and how difficulty is being adjusted. No hidden manipulation — the dashboard is the proof.</p>
-      </div>
-      <div class="ethics-card">
-        <div class="ethics-icon">🎛</div>
-        <div class="ethics-title">Player Agency</div>
-        <p class="ethics-desc">Manual difficulty override always available. NDS adapts, but the player has final control — including the ability to disable adaptation entirely.</p>
-      </div>
-      <div class="ethics-card">
-        <div class="ethics-icon">🔒</div>
-        <div class="ethics-title">Data Minimization</div>
-        <p class="ethics-desc">Only behavioural signals are processed — no biometric data leaves the device. All processing is local, real-time, and ephemeral.</p>
-      </div>
-      <div class="ethics-card">
-        <div class="ethics-icon">⚖</div>
-        <div class="ethics-title">Fairness</div>
-        <p class="ethics-desc">The NDS system ensures difficulty adapts to individual skill, not demographic assumptions. Every player gets a personalized challenge curve.</p>
-      </div>
-    </div>
-
-    <!-- Game Concepts -->
-    <h3 class="section-title animate-in" style="font-size: 1.5rem; margin: 3rem 0 1.5rem;">Game Concepts</h3>
-    <div class="concepts-grid animate-in">
-      <div class="concept-card">
-        <div class="concept-title">REFLEX</div>
-        <div class="concept-genre">Fast-Paced Action Shooter</div>
-        <p class="concept-desc">Arena-based shooter where enemy speed, accuracy, and spawn rates are governed by the NDS engine in real time.</p>
-        <div class="concept-features">
-          <div class="concept-feature">RT-driven enemy reaction speed</div>
-          <div class="concept-feature">Movement-based cover system difficulty</div>
-          <div class="concept-feature">Stress-adaptive health regeneration</div>
-        </div>
-      </div>
-      <div class="concept-card">
-        <div class="concept-title">PULSE</div>
-        <div class="concept-genre">Rhythm-Horror Hybrid</div>
-        <p class="concept-desc">Horror game with a rhythm mechanic — the soundtrack adapts to your stress levels, creating a personalized fear curve.</p>
-        <div class="concept-features">
-          <div class="concept-feature">BPM synced to stress index</div>
-          <div class="concept-feature">Scare timing tuned to RT patterns</div>
-          <div class="concept-feature">Dynamic ambient soundscape</div>
-        </div>
-      </div>
-      <div class="concept-card">
-        <div class="concept-title">GHOST PROTOCOL</div>
-        <div class="concept-genre">Tactical Stealth</div>
-        <p class="concept-desc">Stealth game where enemy patrol intelligence scales with player skill. Expert players face coordinated search patterns.</p>
-        <div class="concept-features">
-          <div class="concept-feature">AI patrol complexity ∝ movement skill</div>
-          <div class="concept-feature">Detection radius adapts to RT</div>
-          <div class="concept-feature">Rescue mode adds safe zones</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ═══════════════════════════════════════════════════
        FOOTER

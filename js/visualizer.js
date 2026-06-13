@@ -7,17 +7,17 @@
 
   /* ── Colour tokens (matching CSS variables) ── */
   const COLORS = {
-    primary:    '#00d4ff',
-    secondary:  '#7c3aed',
-    accent:     '#10b981',
-    warning:    '#f59e0b',
-    danger:     '#ef4444',
-    textMuted:  '#64748b',
-    bgTertiary: '#1a1a2e',
-    zoneBored:      '#f59e0b',
-    zoneFlow:       '#10b981',
-    zoneAnxious:    '#f97316',
-    zoneFrustrated: '#ef4444',
+    primary:    '#818cf8',
+    secondary:  '#c084fc',
+    accent:     '#34d399',
+    warning:    '#fbbf24',
+    danger:     '#f87171',
+    textMuted:  '#6b7db8',
+    bgTertiary: '#1c1c32',
+    zoneBored:      '#fbbf24',
+    zoneFlow:       '#34d399',
+    zoneAnxious:    '#fb923c',
+    zoneFrustrated: '#f87171',
   };
 
   const ZONE_COLORS = {
