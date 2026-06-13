@@ -816,6 +816,7 @@ input[type="range"]::-moz-range-thumb {
    ================================================================ */
 #game-section {
   background: var(--bg-primary);
+  overscroll-behavior: contain;
 }
 .game-layout {
   display: grid;
@@ -836,12 +837,17 @@ input[type="range"]::-moz-range-thumb {
   overflow: hidden;
   background: #07071a;
   border: 1px solid var(--glass-border);
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 .game-canvas-wrapper canvas {
   display: block;
   width: 100%;
   height: auto;
   cursor: crosshair;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .game-controls {
   display: flex;

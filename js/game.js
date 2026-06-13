@@ -271,6 +271,8 @@
 
   /* ── Click Handling ── */
   function handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
     if (!gameRunning) return;
 
     const rect = canvas.getBoundingClientRect();
@@ -331,6 +333,7 @@
 
   function handleMouseMove(e) {
     if (!gameRunning || !gameNDS) return;
+    e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;

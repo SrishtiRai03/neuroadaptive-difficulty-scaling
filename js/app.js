@@ -333,6 +333,23 @@
         link.classList.add('active');
       });
     });
+
+    // Intercept ALL in-page anchor links (CTA buttons, etc.)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      // Skip nav links already handled above
+      if (anchor.classList.contains('nav-link')) return;
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const hash = anchor.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const target = document.getElementById(hash.substring(1));
+        if (!target) return;
+
+        _programmaticScroll = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => { _programmaticScroll = false; }, 1000);
+      });
+    });
   }
 
   /* ================================================================
@@ -504,13 +521,25 @@
     const modal = document.getElementById('report-modal');
 
     if (startBtn && window.Game) {
-      startBtn.addEventListener('click', () => window.Game.start());
+      startBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        startBtn.blur(); // prevent focus-scroll
+        window.Game.start();
+      });
     }
     if (resetBtn && window.Game) {
-      resetBtn.addEventListener('click', () => window.Game.reset());
+      resetBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetBtn.blur(); // prevent focus-scroll
+        window.Game.reset();
+      });
     }
     if (closeBtn && modal) {
-      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeBtn.blur();
+        modal.classList.remove('active');
+      });
     }
     if (modal) {
       modal.addEventListener('click', (e) => {
