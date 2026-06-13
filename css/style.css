@@ -72,6 +72,7 @@ body {
   color: var(--text-primary);
   line-height: 1.65;
   overflow-x: hidden;
+  overflow-anchor: none; /* disable browser scroll-anchoring to prevent auto-scroll */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -110,7 +111,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; letter-spacing: -0.
 
 /* ── Section Common ── */
 section {
-  padding: 5rem 2rem;
+  padding: 4rem 2rem 2rem;
   position: relative;
 }
 .section-title {
@@ -127,7 +128,7 @@ section {
   color: var(--text-secondary);
   font-size: 1.05rem;
   max-width: 600px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 1.5rem;
   font-weight: 400;
 }
 
@@ -536,7 +537,10 @@ section {
 /* ================================================================
    DASHBOARD SECTION
    ================================================================ */
-#dashboard { background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); }
+#dashboard {
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  overflow-anchor: none;
+}
 
 .dashboard-grid {
   display: grid;
@@ -544,6 +548,8 @@ section {
   gap: 1.25rem;
   max-width: 1200px;
   margin: 0 auto;
+  /* fixed height container prevents layout shifts from causing auto-scroll */
+  overflow: visible;
 }
 
 /* Gauges */
@@ -591,6 +597,8 @@ section {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
+  min-height: 260px;
+  overflow: hidden;
 }
 .chart-title {
   font-size: 0.88rem;
@@ -615,6 +623,8 @@ section {
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   text-align: center;
+  min-height: 260px;
+  overflow: hidden;
 }
 .zone-name {
   font-family: var(--font-mono);
@@ -764,7 +774,7 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/* Rescue Mode */
+/* Rescue Mode — use visibility+opacity (not display:none) to prevent layout shifts */
 .rescue-mode {
   grid-column: 1 / -1;
   background: rgba(248, 113, 113, 0.08);
@@ -776,10 +786,26 @@ input[type="range"]::-moz-range-thumb {
   font-weight: 700;
   font-size: 1rem;
   color: var(--danger);
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: none;
+}
+.rescue-mode.active {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  padding: 1rem 1.5rem;
   animation: pulseGlow 2s ease infinite;
 }
-.rescue-mode.active { display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
 
 /* Hysteresis */
 .hysteresis-card {
@@ -816,6 +842,7 @@ input[type="range"]::-moz-range-thumb {
    ================================================================ */
 #game-section {
   background: var(--bg-primary);
+  padding-top: 2rem;
   overscroll-behavior: contain;
 }
 .game-layout {
@@ -1087,7 +1114,7 @@ input[type="range"]::-moz-range-thumb {
   .game-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  section { padding: 3rem 1rem; }
+  section { padding: 2.5rem 1rem 1.5rem; }
   .nav-links { display: none; }
   .nav-links.open {
     display: flex;
